@@ -9,13 +9,13 @@ export default function SMPIslamHegarmanah() {
 
   // Memoized data untuk performa yang lebih baik
   const navLinks = useMemo(() => [
-    { href: "beranda", label: "Beranda" },
-    { href: "tentang", label: "Tentang" },
-    { href: "program", label: "Program" },
-    { href: "guru", label: "Guru" },
-    { href: "fasilitas", label: "Fasilitas" },
-    { href: "galeri", label: "Galeri" },
-    { href: "kontak", label: "Kontak" },
+    { href: "/", label: "Beranda", active: true },
+    { href: "/tentang", label: "Tentang" },
+    { href: "/program", label: "Program" },
+    { href: "/guru", label: "Guru" },
+    { href: "/fasilitas", label: "Fasilitas" },
+    { href: "/galeri", label: "Galeri" },
+    { href: "/berita", label: "Berita" },
   ], []);
 
   const stats = useMemo(() => [
@@ -181,12 +181,7 @@ export default function SMPIslamHegarmanah() {
     }
   ], []);
 
-  // Get current batch of teachers
-  const getCurrentBatch = () => {
-    const startIndex = currentBatchIndex * teachersPerBatch;
-    const endIndex = Math.min(startIndex + teachersPerBatch, teachers.length);
-    return teachers.slice(startIndex, endIndex);
-  };
+  
 
   // Centralized gallery data
   const galleryItems = useMemo(() => [
@@ -244,12 +239,7 @@ export default function SMPIslamHegarmanah() {
     { icon: "🏠", title: "Asrama", desc: "Asrama nyaman dengan pengasuhan 24/7" }
   ], []);
 
-  // Centralized contact data
-  const contactInfo = useMemo(() => [
-    { icon: "📍", title: "Alamat", desc: "Jl. Pendidikan No. 123, Hegarmanah, Purbalingga" },
-    { icon: "📞", title: "Telepon", desc: "+62 281 123 4567" },
-    { icon: "📧", title: "Email", desc: "info@smphegarmanah.sch.id" }
-  ], []);
+  
 
   // Memoized scroll function untuk performa
   const scrollToSection = useCallback((sectionId: string) => {
@@ -376,104 +366,27 @@ export default function SMPIslamHegarmanah() {
         </div>
       </div>
       
-      {/* Navigation Menu */}
-      <nav className="bg-white shadow-sm sticky top-0 z-50" role="navigation" aria-label="Navigasi utama">
+     {/* Navigation Menu */}
+      <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-lg' : 'bg-white'}`} role="navigation" aria-label="Navigasi utama">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
             <div className="hidden md:flex space-x-1">
-              <button
-                onClick={() => scrollToSection('beranda')}
-                className="py-4 px-3 text-blue-800 font-semibold text-sm hover:text-blue-600 border-b-2 border-blue-800 hover:border-blue-600 transition-colors">BERANDA</button>
-              
-              {/* Tentang UMMI Dropdown */}
-              <div className="relative group">
-                <button className="py-4 px-3 text-blue-800 font-semibold text-sm hover:text-blue-600 flex items-center transition-colors">
-                  PROFIL SEKOLAH
-                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-1 w-48 z-50">
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-t-md">Sejarah</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Visi & Misi</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-b-md">Struktur Organisasi</a>
-                </div>
-              </div>
-              
-              {/* Fakultas Dropdown */}
-              <div className="relative group">
-                <button className="py-4 px-3 text-blue-800 font-semibold text-sm hover:text-blue-600 flex items-center transition-colors">
-                  AKADEMIK
-                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7" />
-                  </svg>
-                </button>
-                <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-1 w-48 z-50">
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-t-md">Kurikulum</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Program Pembelajaran</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-b-md">Kalender Akademik</a>
-                </div>
-              </div>
-              
-              {/* Lembaga, Biro, dan UPT Dropdown */}
-              <div className="relative group">
-                <button className="py-4 px-3 text-blue-800 font-semibold text-sm hover:text-blue-600 flex items-center transition-colors">
-                  EKSTRAKURIKULER
-                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-1 w-48 z-50">
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-t-md">Tahfidz Quran</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Pramuka</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-b-md">Seni & Olahraga</a>
-                </div>
-              </div>
-              
-              {/* Informasi Dropdown */}
-              <div className="relative group">
-                <button className="py-4 px-3 text-blue-800 font-semibold text-sm hover:text-blue-600 flex items-center transition-colors">
-                  INFORMASI
-                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7" />
-                  </svg>
-                </button>
-                <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-1 w-48 z-50">
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-t-md">Berita</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Pengumuman</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-b-md">Agenda Kegiatan</a>
-                </div>
-              </div>
-              
-              {/* Album Wisuda Dropdown */}
-              <div className="relative group">
-                <button className="py-4 px-3 text-blue-800 font-semibold text-sm hover:text-blue-600 flex items-center transition-colors">
-                  GALERI
-                  <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7" />
-                  </svg>
-                </button>
-                <div className="absolute hidden group-hover:block bg-white shadow-lg rounded-md mt-1 w-48 z-50">
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-t-md">Kegiatan Siswa</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Prestasi</a>
-                  <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 rounded-b-md">Album Wisuda</a>
-                </div>
-              </div>
-              
-              <a
-                href="/fasilitas"
-                className="py-4 px-3 text-blue-800 font-semibold text-sm hover:text-blue-600 transition-colors">FASILITAS</a>
-              <a
-                href="/galeri"
-                className="py-4 px-3 text-blue-800 font-semibold text-sm hover:text-blue-600 transition-colors">GALERI</a>
-              <button
-                onClick={() => scrollToSection('kontak')}
-                className="py-4 px-3 text-blue-800 font-semibold text-sm hover:text-blue-600 transition-colors">KONTAK</button>
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`py-4 px-3 font-semibold text-sm hover:text-blue-600 transition-colors ${
+                    link.active ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-700 hover:text-blue-600'
+                  }`}
+                >
+                  {link.label.toUpperCase()}
+                </a>
+              ))}
             </div>
             
             {/* Mobile menu button */}
             <button
-              onClick={toggleMobileMenu}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
               aria-label={mobileMenuOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
               aria-expanded={mobileMenuOpen}
@@ -488,88 +401,21 @@ export default function SMPIslamHegarmanah() {
             </button>
           </div>
           
-          {/* Mobile menu */}
+          {/* Mobile Navigation */}
           {mobileMenuOpen && (
             <div className="md:hidden bg-white border-t border-gray-200">
               <div className="px-2 pt-2 pb-3 space-y-1">
-                <button
-                  onClick={() => {
-                    scrollToSection('beranda');
-                    setMobileMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-3 py-2 text-blue-800 font-semibold hover:bg-blue-50 rounded-md">BERANDA</button>
-                
-                <div className="relative">
-                  <details className="group">
-                    <summary className="block px-3 py-2 text-blue-800 font-semibold hover:bg-blue-50 rounded-md cursor-pointer">PROFIL SEKOLAH ▼</summary>
-                    <div className="bg-gray-50 ml-4 mt-1 rounded-md">
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Sejarah</a>
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Visi & Misi</a>
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Struktur Organisasi</a>
-                    </div>
-                  </details>
-                </div>
-                
-                <div className="relative">
-                  <details className="group">
-                    <summary className="block px-3 py-2 text-blue-800 font-semibold hover:bg-blue-50 rounded-md cursor-pointer">AKADEMIK ▼</summary>
-                    <div className="bg-gray-50 ml-4 mt-1 rounded-md">
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Kurikulum</a>
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Program Pembelajaran</a>
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Kalender Akademik</a>
-                    </div>
-                  </details>
-                </div>
-                
-                <div className="relative">
-                  <details className="group">
-                    <summary className="block px-3 py-2 text-blue-800 font-semibold hover:bg-blue-50 rounded-md cursor-pointer">EKSTRAKURIKULER ▼</summary>
-                    <div className="bg-gray-50 ml-4 mt-1 rounded-md">
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Tahfidz Quran</a>
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Pramuka</a>
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Seni & Olahraga</a>
-                    </div>
-                  </details>
-                </div>
-                
-                <div className="relative">
-                  <details className="group">
-                    <summary className="block px-3 py-2 text-blue-800 font-semibold hover:bg-blue-50 rounded-md cursor-pointer">INFORMASI ▼</summary>
-                    <div className="bg-gray-50 ml-4 mt-1 rounded-md">
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Berita</a>
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Pengumuman</a>
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Agenda Kegiatan</a>
-                    </div>
-                  </details>
-                </div>
-                
-                <div className="relative">
-                  <details className="group">
-                    <summary className="block px-3 py-2 text-blue-800 font-semibold hover:bg-blue-50 rounded-md cursor-pointer">GALERI ▼</summary>
-                    <div className="bg-gray-50 ml-4 mt-1 rounded-md">
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Kegiatan Siswa</a>
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Prestasi</a>
-                      <a href="#" className="block px-3 py-2 text-sm text-gray-700 hover:bg-blue-50">Album Wisuda</a>
-                    </div>
-                  </details>
-                </div>
-                
-                <button
-                  onClick={() => {
-                    scrollToSection('fasilitas');
-                    setMobileMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-3 py-2 text-blue-800 font-semibold hover:bg-blue-50 rounded-md">FASILITAS</button>
-                <a
-                  href="/galeri"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full text-left px-3 py-2 text-blue-800 font-semibold hover:bg-blue-50 rounded-md">GALERI</a>
-                <button
-                  onClick={() => {
-                    scrollToSection('kontak');
-                    setMobileMenuOpen(false);
-                  }}
-                  className="block w-full text-left px-3 py-2 text-blue-800 font-semibold hover:bg-blue-50 rounded-md">KONTAK</button>
+                {navLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className={`block w-full text-left px-3 py-2 font-semibold hover:bg-blue-50 rounded-md transition-colors ${
+                      link.active ? 'text-blue-800 bg-blue-50' : 'text-gray-700 hover:text-blue-600'
+                    }`}
+                  >
+                    {link.label.toUpperCase()}
+                  </a>
+                ))}
               </div>
             </div>
           )}
@@ -596,20 +442,20 @@ export default function SMPIslamHegarmanah() {
               </p>
               
               <div className="flex flex-col xs:flex-row gap-3 sm:gap-5 justify-center mb-12 sm:mb-20 animate-fade-in">
-                <button
-                  onClick={() => scrollToSection("kontak")}
-                  className="px-6 sm:px-9 py-3 sm:py-4 bg-gradient-to-r from-blue-700 to-blue-600 text-white font-bold text-base sm:text-lg rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:from-blue-800 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-blue-800"
-                  aria-label="Daftar sekarang ke SMP Islam Hegarmanah"
+                <a
+                  href="/berita"
+                  className="px-6 sm:px-9 py-3 sm:py-4 bg-gradient-to-r from-blue-700 to-blue-600 text-white font-bold text-base sm:text-lg rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:from-blue-800 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 focus:ring-offset-2 focus:ring-offset-blue-800 inline-block text-center"
+                  aria-label="Lihat berita terbaru SMP Islam Hegarmanah"
                 >
-                  Daftar Sekarang
-                </button>
-                <button
-                  onClick={() => scrollToSection("tentang")}
-                  className="px-6 sm:px-9 py-3 sm:py-4 bg-transparent text-white font-bold text-base sm:text-lg rounded-xl sm:rounded-2xl border-2 border-white transition-all duration-300 hover:bg-white hover:text-blue-800 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-blue-800"
+                  Berita Terbaru
+                </a>
+                <a
+                  href="/tentang"
+                  className="px-6 sm:px-9 py-3 sm:py-4 bg-transparent text-white font-bold text-base sm:text-lg rounded-xl sm:rounded-2xl border-2 border-white transition-all duration-300 hover:bg-white hover:text-blue-800 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-blue-800 inline-block text-center"
                   aria-label="Pelajari lebih lanjut tentang sekolah"
                 >
                   Pelajari Lebih Lanjut
-                </button>
+                </a>
               </div>
 
               {/* Floating Card */}
@@ -796,6 +642,83 @@ export default function SMPIslamHegarmanah() {
           </div>
         </section>
 
+        {/* Latest News Section */}
+        <section className="py-12 sm:py-16 lg:py-20 bg-white" aria-labelledby="news-heading">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 id="news-heading" className="text-2xl xs:text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Berita Terbaru
+              </h2>
+              <div className="w-16 h-1 bg-gradient-to-r from-blue-800 to-blue-600 rounded mx-auto"></div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8">
+              {[
+                {
+                  title: "Prestasi Gemilang! SMP Islam Hegarmanah Raih Juara 1 Lomba Tahfizh Tingkat Kabupaten",
+                  excerpt: "Tim tahfizh SMP Islam Hegarmanah berhasil meraih juara 1 dalam lomba tahfizh Al-Qur'an tingkat kabupaten.",
+                  date: "15 Januari 2025",
+                  category: "Prestasi",
+                  emoji: "🏆"
+                },
+                {
+                  title: "SMP Islam Hegarmanah Wisuda 120 Santri Proud Scholars",
+                  excerpt: "Prosesi wisuda capaian program tahfizh 30 juz untuk seluruh santri angkatan 2025.",
+                  date: "20 Januari 2025",
+                  category: "Prestasi",
+                  emoji: "🎓"
+                },
+                {
+                  title: "Program New Normal Learning di Era Digital",
+                  excerpt: "Sekolah mengimplementasikan sistem pembelajaran hybrid yang menggabungkan tatap muka dan online.",
+                  date: "18 Januari 2025",
+                  category: "Akademik",
+                  emoji: "💻"
+                }
+              ].map((news, index) => (
+                <article
+                  key={index}
+                  className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 overflow-hidden"
+                >
+                  <div className="relative h-40 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                    <div className="text-5xl">{news.emoji}</div>
+                    <div className="absolute top-3 right-3">
+                      <span className="inline-block px-3 py-1 bg-blue-600 text-white text-xs font-medium rounded-full">
+                        {news.category}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="p-4 sm:p-6">
+                    <div className="text-xs text-gray-500 mb-2">{news.date}</div>
+                    <h3 className="font-bold text-base sm:text-lg text-gray-900 mb-3 line-clamp-2">
+                      {news.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
+                      {news.excerpt}
+                    </p>
+                    <a
+                      href="/berita"
+                      className="text-blue-600 text-sm font-medium hover:text-blue-800 transition-colors"
+                    >
+                      Baca Selengkapnya →
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+            
+            <div className="text-center">
+              <a
+                href="/berita"
+                className="px-6 sm:px-9 py-3 sm:py-4 bg-gradient-to-r from-blue-800 to-blue-600 text-white font-bold text-base sm:text-lg rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:from-blue-900 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+              >
+                Lihat Semua Berita
+              </a>
+            </div>
+          </div>
+        </section>
+
         {/* Image Gallery Carousel Section */}
         <section className="py-12 sm:py-16 lg:py-20 bg-gray-50" aria-labelledby="gallery-carousel-heading">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -834,43 +757,7 @@ export default function SMPIslamHegarmanah() {
         </section>
 
 
-        {/* Contact Section */}
-        <section id="kontak" className="py-12 sm:py-16 lg:py-20 xl:py-32 bg-gray-50" aria-labelledby="kontak-heading">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12 sm:mb-16">
-              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-100 text-blue-800 rounded-full font-bold text-xs sm:text-sm mb-6 sm:mb-7" role="status">
-                Kontak
-              </div>
-              <h2 id="kontak-heading" className="text-2xl xs:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
-                Hubungi Kami
-              </h2>
-              <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-blue-800 to-blue-600 rounded mx-auto mb-6 sm:mb-10" aria-hidden="true"></div>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-8 sm:mb-12" role="list" aria-label="Informasi kontak">
-              {contactInfo.map((contact, index) => (
-                <div
-                  key={`contact-${index}`}
-                  className="bg-white rounded-2xl p-6 sm:p-8 text-center shadow-lg hover:shadow-xl transition-all duration-300"
-                  role="listitem"
-                >
-                  <div className="text-3xl sm:text-4xl mb-3 sm:mb-4" aria-hidden="true">{contact.icon}</div>
-                  <h3 className="font-bold text-base sm:text-lg text-gray-900 mb-2">{contact.title}</h3>
-                  <p className="text-gray-600 text-sm">{contact.desc}</p>
-                </div>
-              ))}
-            </div>
-            
-            <div className="text-center">
-              <button
-                className="px-6 sm:px-9 py-3 sm:py-4 bg-gradient-to-r from-blue-800 to-blue-600 text-white font-bold text-base sm:text-lg rounded-xl sm:rounded-2xl transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:from-blue-900 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
-                aria-label="Daftar sekarang ke SMP Islam Hegarmanah"
-              >
-                Daftar Sekarang
-              </button>
-            </div>
-          </div>
-        </section>
+        
       </main>
 
       {/* Footer */}
@@ -905,23 +792,13 @@ export default function SMPIslamHegarmanah() {
                 <ul className="space-y-2 text-gray-400" role="list">
                   {navLinks.map((link) => (
                     <li key={`footer-${link.href}`} role="listitem">
-                      {link.href === 'galeri' ? (
-                        <a
-                          href="/galeri"
-                          className="hover:text-white transition-colors focus:outline-none focus:text-white text-sm"
-                          aria-label={`Navigasi ke halaman ${link.label}`}
-                        >
-                          {link.label}
-                        </a>
-                      ) : (
-                        <button
-                          onClick={() => scrollToSection(link.href)}
-                          className="hover:text-white transition-colors focus:outline-none focus:text-white text-sm"
-                          aria-label={`Navigasi ke bagian ${link.label}`}
-                        >
-                          {link.label}
-                        </button>
-                      )}
+                      <a
+                        href={link.href}
+                        className="hover:text-white transition-colors focus:outline-none focus:text-white text-sm"
+                        aria-label={`Navigasi ke halaman ${link.label}`}
+                      >
+                        {link.label}
+                      </a>
                     </li>
                   ))}
                 </ul>
