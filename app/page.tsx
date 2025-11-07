@@ -2,22 +2,12 @@
 
 import Image from "next/image";
 import { useState, useEffect, useCallback, useMemo } from "react";
+import Navbar from "../components/Navbar";
 
 export default function SMPIslamHegarmanah() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   // Memoized data untuk performa yang lebih baik
-  const navLinks = useMemo(() => [
-    { href: "/", label: "Beranda", active: true },
-    { href: "/tentang", label: "Tentang" },
-    { href: "/program", label: "Program" },
-    { href: "/guru", label: "Guru" },
-    { href: "/fasilitas", label: "Fasilitas" },
-    { href: "/galeri", label: "Galeri" },
-    { href: "/berita", label: "Berita" },
-  ], []);
-
   const stats = useMemo(() => [
     { number: "500+", label: "Siswa Aktif" },
     { number: "50+", label: "Guru Profesional" },
@@ -181,8 +171,6 @@ export default function SMPIslamHegarmanah() {
     }
   ], []);
 
-  
-
   // Centralized gallery data
   const galleryItems = useMemo(() => [
     { id: 1, title: "Kegiatan Pembelajaran", emoji: "📚", category: "Akademik" },
@@ -239,191 +227,23 @@ export default function SMPIslamHegarmanah() {
     { icon: "🏠", title: "Asrama", desc: "Asrama nyaman dengan pengasuhan 24/7" }
   ], []);
 
-  
-
-  // Memoized scroll function untuk performa
-  const scrollToSection = useCallback((sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const offsetTop = element.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth"
-      });
-      setMobileMenuOpen(false);
-    }
-  }, []);
-
-  // Toggle mobile menu dengan debouncing
-  const toggleMobileMenu = useCallback(() => {
-    setMobileMenuOpen(prev => !prev);
-  }, []);
-
+  // Enhanced scroll effect with performance optimization
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 60);
     };
 
-    // Passive listener untuk performa yang lebih baik
+    // Use passive listener for better performance
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Keyboard navigation untuk aksesibilitas
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && mobileMenuOpen) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [mobileMenuOpen]);
-
   return (
     <div className="min-h-screen bg-white">
-      {/* Skip to main content link for accessibility */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 bg-blue-800 text-white px-4 py-2 rounded-lg font-medium"
-      >
-        Lewati ke konten utama
-      </a>
+      <Navbar currentPath="/" />
       
-      {/* Top Bar - Blue Contact Info & Search */}
-      <div className="bg-blue-700 text-white py-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            {/* Left side - Contact info */}
-            <div className="flex items-center space-x-4 text-xs mb-2 sm:mb-0">
-              <div className="flex items-center">
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                info@ummi.ac.id
-              </div>
-              <div className="flex items-center">
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-                (0266) 218 345
-              </div>
-            </div>
-            
-            {/* Right side - Search and language */}
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center bg-white/20 rounded-full px-3 py-1">
-                <input
-                  type="text"
-                  placeholder="Cari di sini..."
-                  className="bg-transparent text-white placeholder-white/70 text-xs focus:outline-none w-24 sm:w-32"
-                />
-                <button className="text-white">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-              </div>
-              <div className="flex space-x-2">
-                <button className="text-xs bg-white/20 px-2 py-1 rounded">ID</button>
-                <button className="text-xs bg-white/10 px-2 py-1 rounded">EN</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Logo & Branding Section */}
-      <div className="bg-white py-4 border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center">
-              {/* Logo */}
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20">
-                <Image
-                  src="/logo.jpg"
-                  alt="Logo SMP Islam Hegarmanah"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-              
-              {/* Vertical separator */}
-              <div className="mx-4 h-12 w-px bg-gray-300 hidden sm:block"></div>
-              
-              {/* Brand Info */}
-              <div className="text-center sm:text-left">
-                <div className="flex items-center">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">SMP ISLAM HEGARMANAH</h1>
-                  <span className="ml-3 px-2 py-1 bg-red-600 text-white text-xs font-bold rounded">2<sup>nd</sup></span>
-                </div>
-                <p className="text-sm sm:text-base text-gray-600 mt-1">Membangun Generasi Qur'an yang Unggul dan Berkarakter</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-     {/* Navigation Menu */}
-      <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-lg' : 'bg-white'}`} role="navigation" aria-label="Navigasi utama">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            <div className="hidden md:flex space-x-1">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className={`py-4 px-3 font-semibold text-sm hover:text-blue-600 transition-colors ${
-                    link.active ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-700 hover:text-blue-600'
-                  }`}
-                >
-                  {link.label.toUpperCase()}
-                </a>
-              ))}
-            </div>
-            
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label={mobileMenuOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
-              aria-expanded={mobileMenuOpen}
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-          
-          {/* Mobile Navigation */}
-          {mobileMenuOpen && (
-            <div className="md:hidden bg-white border-t border-gray-200">
-              <div className="px-2 pt-2 pb-3 space-y-1">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className={`block w-full text-left px-3 py-2 font-semibold hover:bg-blue-50 rounded-md transition-colors ${
-                      link.active ? 'text-blue-800 bg-blue-50' : 'text-gray-700 hover:text-blue-600'
-                    }`}
-                  >
-                    {link.label.toUpperCase()}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
-
-      {/* Hero Section */}
       <main id="main-content">
+        {/* Hero Section */}
         <section
           id="beranda"
           className="relative bg-gradient-to-br from-blue-800 to-blue-600 pt-20 sm:pt-24 lg:pt-28 min-h-screen flex items-center"
@@ -458,11 +278,6 @@ export default function SMPIslamHegarmanah() {
                 </a>
               </div>
 
-              {/* Floating Card */}
-              <div className="animate-bounce max-w-xs sm:max-w-lg mx-auto mb-12 sm:mb-16">
-                
-              </div>
-
               {/* Stats Grid */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 max-w-5xl mx-auto" role="list" aria-label="Statistik sekolah">
                 {stats.map((stat, index) => (
@@ -480,7 +295,6 @@ export default function SMPIslamHegarmanah() {
           </div>
         </section>
 
-     
         {/* About Section */}
         <section id="tentang" className="py-12 sm:py-16 lg:py-20 xl:py-32 bg-gray-50" aria-labelledby="tentang-heading">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -569,39 +383,7 @@ export default function SMPIslamHegarmanah() {
           </div>
         </section>
 
-        {/* Teachers Section - Replaced by carousel above */}
-
-        {/* Facilities Section */}
-        <section id="fasilitas" className="py-12 sm:py-16 lg:py-20 xl:py-32 bg-white" aria-labelledby="fasilitas-heading">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12 sm:mb-16">
-              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-100 text-blue-800 rounded-full font-bold text-xs sm:text-sm mb-6 sm:mb-7" role="status">
-                Fasilitas
-              </div>
-              <h2 id="fasilitas-heading" className="text-2xl xs:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
-                Fasilitas Modern & Lengkap
-              </h2>
-              <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-blue-800 to-blue-600 rounded mx-auto mb-6 sm:mb-10" aria-hidden="true"></div>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" role="list" aria-label="Fasilitas sekolah">
-              {facilities.map((facility, index) => (
-                <div
-                  key={`facility-${index}`}
-                  className="flex items-center space-x-4 p-4 sm:p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors duration-300"
-                  role="listitem"
-                >
-                  <div className="text-3xl sm:text-4xl flex-shrink-0" aria-hidden="true">{facility.icon}</div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-base sm:text-lg text-gray-900 mb-1">{facility.title}</h3>
-                    <p className="text-gray-600 text-sm leading-tight">{facility.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-   {/* Teachers Carousel Section */}
+        {/* Teachers Carousel Section */}
         <section className="py-12 sm:py-16 lg:py-20 bg-white" aria-labelledby="teachers-carousel-heading">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8 sm:mb-12">
@@ -638,6 +420,37 @@ export default function SMPIslamHegarmanah() {
               <p className="text-sm text-gray-500">
                 Tim Pengajar SMP Islam Hegarmanah ({teachers.length} Guru Professional)
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Facilities Section */}
+        <section id="fasilitas" className="py-12 sm:py-16 lg:py-20 xl:py-32 bg-white" aria-labelledby="fasilitas-heading">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12 sm:mb-16">
+              <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-blue-100 text-blue-800 rounded-full font-bold text-xs sm:text-sm mb-6 sm:mb-7" role="status">
+                Fasilitas
+              </div>
+              <h2 id="fasilitas-heading" className="text-2xl xs:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
+                Fasilitas Modern & Lengkap
+              </h2>
+              <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-blue-800 to-blue-600 rounded mx-auto mb-6 sm:mb-10"></div>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" role="list" aria-label="Fasilitas sekolah">
+              {facilities.map((facility, index) => (
+                <div
+                  key={`facility-${index}`}
+                  className="flex items-center space-x-4 p-4 sm:p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors duration-300"
+                  role="listitem"
+                >
+                  <div className="text-3xl sm:text-4xl flex-shrink-0" aria-hidden="true">{facility.icon}</div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-base sm:text-lg text-gray-900 mb-1">{facility.title}</h3>
+                    <p className="text-gray-600 text-sm leading-tight">{facility.desc}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -755,9 +568,6 @@ export default function SMPIslamHegarmanah() {
             </div>
           </div>
         </section>
-
-
-        
       </main>
 
       {/* Footer */}
@@ -790,7 +600,15 @@ export default function SMPIslamHegarmanah() {
               <h4 className="font-bold text-base sm:text-lg mb-3 sm:mb-4">Menu</h4>
               <nav aria-label="Menu footer">
                 <ul className="space-y-2 text-gray-400" role="list">
-                  {navLinks.map((link) => (
+                  {[
+                    { href: "/", label: "Beranda" },
+                    { href: "/tentang", label: "Tentang" },
+                    { href: "/program", label: "Program" },
+                    { href: "/guru", label: "Guru" },
+                    { href: "/fasilitas", label: "Fasilitas" },
+                    { href: "/galeri", label: "Galeri" },
+                    { href: "/berita", label: "Berita" },
+                  ].map((link) => (
                     <li key={`footer-${link.href}`} role="listitem">
                       <a
                         href={link.href}

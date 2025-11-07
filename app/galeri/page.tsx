@@ -1,13 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
+import Navbar from "../../components/Navbar";
 
 export default function GaleriPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  // Memoized navigation links for consistency with main page
+  // Navigation links for consistency with main page
   const navLinks = [
     { href: "/", label: "Beranda" },
     { href: "/tentang", label: "Tentang" },
@@ -73,178 +71,19 @@ export default function GaleriPage() {
       id: 8,
       image: "/gallery-kegiatan8.jpg", 
       title: "Olahraga", 
-      desc: "Pertandingan olahraga antar kelas dalam rangka memperingati hari besar Islam",
+      desc: "Pertandingan olahraga antar kelas dalam rangka memperingatan hari besar Islam",
       category: "Ekstrakurikuler"
     }
   ];
 
-  // Scroll effect for navbar styling
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 60);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Keyboard navigation for accessibility
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && mobileMenuOpen) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [mobileMenuOpen]);
-
   return (
     <div className="min-h-screen bg-white">
-      {/* Skip to main content link for accessibility */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 bg-blue-800 text-white px-4 py-2 rounded-lg font-medium"
-      >
-        Lewati ke konten utama
-      </a>
-      
-      {/* Top Bar - Blue Contact Info & Search */}
-      <div className="bg-blue-700 text-white py-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            {/* Left side - Contact info */}
-            <div className="flex items-center space-x-4 text-xs mb-2 sm:mb-0">
-              <div className="flex items-center">
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                info@ummi.ac.id
-              </div>
-              <div className="flex items-center">
-                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
-                (0266) 218 345
-              </div>
-            </div>
-            
-            {/* Right side - Search and language */}
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center bg-white/20 rounded-full px-3 py-1">
-                <input
-                  type="text"
-                  placeholder="Cari di sini..."
-                  className="bg-transparent text-white placeholder-white/70 text-xs focus:outline-none w-24 sm:w-32"
-                />
-                <button className="text-white">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </button>
-              </div>
-              <div className="flex space-x-2">
-                <button className="text-xs bg-white/20 px-2 py-1 rounded">ID</button>
-                <button className="text-xs bg-white/10 px-2 py-1 rounded">EN</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Logo & Branding Section */}
-      <div className="bg-white py-4 border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center">
-              {/* Logo */}
-              <div className="relative w-16 h-16 sm:w-20 sm:h-20">
-                <Image
-                  src="/logo.jpg"
-                  alt="Logo SMP Islam Hegarmanah"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-              
-              {/* Vertical separator */}
-              <div className="mx-4 h-12 w-px bg-gray-300 hidden sm:block"></div>
-              
-              {/* Brand Info */}
-              <div className="text-center sm:text-left">
-                <div className="flex items-center">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">SMP ISLAM HEGARMANAH</h1>
-                  <span className="ml-3 px-2 py-1 bg-red-600 text-white text-xs font-bold rounded">2<sup>nd</sup></span>
-                </div>
-                <p className="text-sm sm:text-base text-gray-600 mt-1">Membangun Generasi Qur'an yang Unggul dan Berkarakter</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Navigation Menu */}
-      <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-lg' : 'bg-white'}`} role="navigation" aria-label="Navigasi utama">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            <div className="hidden md:flex space-x-1">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className={`py-4 px-3 font-semibold text-sm hover:text-blue-600 transition-colors ${
-                    link.active ? 'text-blue-800 border-b-2 border-blue-800' : 'text-gray-700 hover:text-blue-600'
-                  }`}
-                >
-                  {link.label.toUpperCase()}
-                </a>
-              ))}
-            </div>
-            
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              aria-label={mobileMenuOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
-              aria-expanded={mobileMenuOpen}
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-          
-          {/* Mobile Navigation */}
-          {mobileMenuOpen && (
-            <div className="md:hidden bg-white border-t border-gray-200">
-              <div className="px-2 pt-2 pb-3 space-y-1">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className={`block w-full text-left px-3 py-2 font-semibold hover:bg-blue-50 rounded-md transition-colors ${
-                      link.active ? 'text-blue-800 bg-blue-50' : 'text-gray-700 hover:text-blue-600'
-                    }`}
-                  >
-                    {link.label.toUpperCase()}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </nav>
+      <Navbar currentPath="/galeri" />
 
       {/* Gallery Header Section */}
       <main id="main-content">
         <section className="relative bg-gradient-to-br from-blue-800 to-blue-600 pt-20 sm:pt-24 lg:pt-28 pb-12 sm:pb-16 lg:pb-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20 center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
             <div className="text-center text-white max-w-5xl mx-auto">
               <div className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-white/20 text-white rounded-full font-bold text-xs sm:text-sm mb-6 sm:mb-7">
                 Galeri Kegiatan
